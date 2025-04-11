@@ -9,6 +9,9 @@ const btn3 = document.querySelector('#button3');
 const xpText = document.querySelector('#xpText');
 const healthText = document.querySelector('#healthText');
 const goldText = document.querySelector('#goldText');
+const monsterStats = document.querySelector('#monsterStats');
+const monsterName = document.querySelector('#monsterName');
+const monsterHealth = document.querySelector('#monsterHealth');
 
 const locations = [
     {
@@ -38,6 +41,19 @@ const locations = [
         'button function': [attack, dodge, run],
         text: 'You are fighting a monster.'
     }
+];
+
+const monster = [
+    {name: 'slime', level: 2, health: 15},
+    {name: 'fanged beast', level: 8, health: 60},
+    {name: 'dragon', level: 20, health: 200}
+];
+
+const weapons = [
+    {name: 'stick', power: 5},
+    {name: 'dagger', power: 30},
+    {name: 'claw hammer', power: 50},
+    {name: 'divine knife', power: 100}
 ];
 
 btn1.onclick = goStore;
