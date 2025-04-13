@@ -58,22 +58,36 @@ const weapons = [
 
 btn1.onclick = goStore;
 btn2.onclick = goCave;
-btn1.onclick = fightDragon;
+btn3.onclick = fightDragon;
 
-function update() {
+function update(location) {
+    monsterStats.style.display = 'none';
     
+    btn1.innerText = location['button text'][0];
+    btn2.innerText = location['button text'][1];
+    btn3.innerText = location['button text'][2];
+
+    btn1.onclick = location['button function'][0];
+    btn2.onclick = location['button function'][1];
+    btn3.onclick = location['button function'][2];
+
+    text.innerHTML = location.text;
+}
+
+function goTown() {
+    update(locations[0]);
 }
 
 function goStore() {
-
+    update(locations[1]);
 }
 
 function goCave() {
-
+    update(locations[2]);
 }
 
 function fightDragon() {
-
+    update(locations[3]);
 }
 
 function buyHealth() {
@@ -81,10 +95,6 @@ function buyHealth() {
 }
 
 function buyWeapon() {
-
-}
-
-function goTown() {
 
 }
 
