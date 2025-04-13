@@ -3,6 +3,8 @@ let health = 100;
 let gold = 50;
 let fighting;
 let monsterHealth;
+let currentWeapon = 0;
+let inventory = ["stick"];
 
 const btn1 = document.querySelector('#button1');
 const btn2 = document.querySelector('#button2');
@@ -133,7 +135,14 @@ function fightDragon() {
 }
 
 function buyHealth() {
-
+    if(gold > 0) {
+        health += 10;
+        gold -= 10;
+        healthText.innerText = health;
+        goldText.innerText = gold;
+    } else {
+        text.innerText = 'You do not have enough gold to buy health.';
+    }
 }
 
 function buyWeapon() {
@@ -141,17 +150,22 @@ function buyWeapon() {
 }
 
 function attack() {
-
+    
 }
 
 function dodge() {
-
+    
 }
 
 function run() {
-    update(locations[0]);
+    restart();
 }
 
 function restart() {
-
+    xpText.innerText = 0;
+    healthText.innerText = 100;
+    goldText.innerText = 50;
+    currentWeapon = 0;
+    inventory = ["stick"];
+    goTown();
 }
