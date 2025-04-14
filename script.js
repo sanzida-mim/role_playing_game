@@ -4,7 +4,7 @@ let gold = 50;
 let fighting;
 let monsterHealth;
 let currentWeapon = 0;
-let inventory = ["Sheild &#x1F6E1;"];
+let inventory = ["Stick"];
 
 const btn1 = document.querySelector('#button1');
 const btn2 = document.querySelector('#button2');
@@ -75,10 +75,10 @@ const monsters = [
 ];
 
 const weapons = [
-    {name: 'Sheild &#x1F6E1;', power: 5},
-    {name: ' Dagger &#128481;', power: 30},
-    {name: ' Claw hammer &#xe116;', power: 50},
-    {name: ' divine knife &#128481;', power: 100}
+    {name: 'Stick', power: 5},
+    {name: ' Dagger', power: 30},
+    {name: ' Claw hammer', power: 50},
+    {name: ' Divine Sword', power: 100}
 ];
 
 btn1.onclick = goStore;
@@ -154,24 +154,32 @@ function buyWeapon() {
 
             let newWeapon = weapons[currentWeapon].name;
 
-            text.innerHTML = 'You now have a new ' + newWeapon + '.';
+            text.innerText = 'You now have a new ' + newWeapon + '.';
 
             inventory.push(newWeapon);
 
-            text.innerHTML += 'In your inventory you have: ' + inventory + '.';
+            text.innerText += '\n\nIn your inventory you have: ' + inventory + '.';
         } else {
-            text.innerHTML = 'You do not have enough gold to buy new weapon.';
+            btn2.innerText = 'Sell weapon (15 gold)';
+            btn2.onclick = sellWeapon;
+
+            text.innerText = 'You do not have enough gold to buy new weapon.';
         }
     } else {
-        text.innerHTML = 'You already have the best weapons in your inventory. \n In your inventory you have: ' + inventory + '.';
-
-        btn2.innerText = 'Sell weapon (15 gold)';
-        btn2.onclick = sellWeapon;
+        text.innerText = 'You already have the best weapons in your inventory.\n\nIn your inventory you have: ' + inventory + '.';
     }
 }
 
 function sellWeapon() {
-    
+    if(inventory.length > 1) {
+        let soldWeapon = inventory.pop();
+        text.innerText = 'You sold your ' + soldWeapon + '.' + '\n\nIn inventory now you have: ' + inventory + '.';
+        gold += 15;
+        goldText.innerText = gold;
+    } else {
+        text.innerText = 'You can not sell your only weapon.'
+        text.style.color = 'red';
+    }
 }
 
 function attack() {
