@@ -4,7 +4,7 @@ let gold = 50;
 let fighting;
 let monsterHealth;
 let currentWeapon = 0;
-let inventory = ["stick"];
+let inventory = ["Sheild &#x1F6E1;"];
 
 const btn1 = document.querySelector('#button1');
 const btn2 = document.querySelector('#button2');
@@ -75,10 +75,10 @@ const monsters = [
 ];
 
 const weapons = [
-    {name: 'stick', power: 5},
-    {name: 'dagger', power: 30},
-    {name: 'claw hammer', power: 50},
-    {name: 'divine knife', power: 100}
+    {name: 'Sheild &#x1F6E1;', power: 5},
+    {name: ' Dagger &#128481;', power: 30},
+    {name: ' Claw hammer &#xe116;', power: 50},
+    {name: ' divine knife &#128481;', power: 100}
 ];
 
 btn1.onclick = goStore;
@@ -146,7 +146,32 @@ function buyHealth() {
 }
 
 function buyWeapon() {
+    if(currentWeapon < weapons.length-1) {
+        if(gold >= 30) {
+            gold -= 30;
+            goldText.innerText = gold;
+            currentWeapon++;
 
+            let newWeapon = weapons[currentWeapon].name;
+
+            text.innerHTML = 'You now have a new ' + newWeapon + '.';
+
+            inventory.push(newWeapon);
+
+            text.innerHTML += 'In your inventory you have: ' + inventory + '.';
+        } else {
+            text.innerHTML = 'You do not have enough gold to buy new weapon.';
+        }
+    } else {
+        text.innerHTML = 'You already have the best weapons in your inventory. \n In your inventory you have: ' + inventory + '.';
+
+        btn2.innerText = 'Sell weapon (15 gold)';
+        btn2.onclick = sellWeapon;
+    }
+}
+
+function sellWeapon() {
+    
 }
 
 function attack() {
