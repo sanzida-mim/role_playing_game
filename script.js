@@ -47,7 +47,7 @@ const locations = [
     },
 
     {
-        name: 'kill monster',
+        name: 'defeat monster',
         'button text': ['Go to town square', 'Go to town square', 'Go to town square'],
         'button functions': [goStore, goStore, goStore],
         text: 'The monster screams \"Arg!\" as it dies. You gain experience points and find gold.'
@@ -190,15 +190,16 @@ function attack() {
 
     if(isMonsterHit()) {
         monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+
+        monsterHealthText.innerText = monsterHealth;
     } else {
         text.innerText = ' Ugh! You missed.';
     }
 
     healthText.innerText = health;
-    monsterHealthText = monsterHealth;
 
     if(health <= 0) {
-        lose();
+        loseGame();
     } else if(monsterHealth <= 0) {
         if(fighting === 2) {
             winGame();
@@ -207,27 +208,42 @@ function attack() {
         }
     }
 
-    if(Math.random() <= 1 && inventory.length !== 1) {
+    if(Math.random() <= .1 && inventory.length !== 1) {
         text.innerText = 'Your ' + inventory.pop() + 'breaks.';
         currentWeapon--;
     }
 }
 
-function getMonsterAttackValue() {
+function getMonsterAttackValue(level) {
     const hit = (level * 5) - (Math.random() * xp);
-    return hit > 0; hit:0;
+    return hit > 0? hit:0;
 }
 
 function isMonsterHit() {
-    return Math.random > 0.2 || health < 20;
+    return Math.random() > 0.2 || health < 20;
 }
 
 function dodge() {
-    
+    text.innerText = 'The ' + monsters[fighting].name + ' attacks.'
+    text.innerText += ' But you skillfully dodge the attack from this man eating ' + monsters[fighting].name;
 }
 
-function run() {
-    restart();
+function loseGame() {
+    update(locations[5]);
+}
+
+function winGame() {
+    update(locations[6]);
+}
+
+function defeatMonster() {
+    gold += Math.floor(monsters[fighting].level * 5);
+    xp += monsters[fighting].level;
+
+    goldText.innerText = gold;
+    xpText.innerText = xp;
+
+    update(locations[4]);
 }
 
 function restart() {
