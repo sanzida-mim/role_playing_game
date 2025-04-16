@@ -48,8 +48,8 @@ const locations = [
 
     {
         name: 'defeat monster',
-        'button text': ['Go to town square', 'Go to town square', 'Go to town square'],
-        'button functions': [goStore, goStore, goStore],
+        'button text': ['Go to town square', 'Go to town square', 'Easter Egg'],
+        'button functions': [goStore, goStore, easterEgg],
         text: 'The monster screams \"Arg!\" as it dies. You gain experience points and find gold.'
     },
 
@@ -253,12 +253,20 @@ function defeatMonster() {
     update(locations[4]);
 }
 
-function pickTwo() {
+function easterEgg() {
+    update(locations[7]);
+}
 
+function pickTwo() {
+    pick(2);
 }
 
 function pickEight() {
-    
+    pick(8);
+}
+
+function pick(guess) {
+
 }
 
 function restart() {
