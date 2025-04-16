@@ -49,7 +49,7 @@ const locations = [
     {
         name: 'defeat monster',
         'button text': ['Go to town square', 'Go to town square', 'Easter Egg'],
-        'button functions': [goStore, goStore, easterEgg],
+        'button functions': [goTown, goTown, easterEgg],
         text: 'The monster screams \"Arg!\" as it dies. You gain experience points and find gold.'
     },
 
@@ -142,9 +142,9 @@ function fightDragon() {
 }
 
 function buyHealth() {
-    if(gold > 0) {
-        health += 10;
+    if(gold >= 10) {
         gold -= 10;
+        health += 10;
         healthText.innerText = health;
         goldText.innerText = gold;
     } else {
@@ -156,8 +156,9 @@ function buyWeapon() {
     if(currentWeapon < weapons.length-1) {
         if(gold >= 30) {
             gold -= 30;
-            goldText.innerText = gold;
+            
             currentWeapon++;
+            goldText.innerText = gold;
 
             let newWeapon = weapons[currentWeapon].name;
 
@@ -167,13 +168,12 @@ function buyWeapon() {
 
             text.innerText += '\n\nIn your inventory you have: ' + inventory + '.';
         } else {
-            btn2.innerText = 'Sell weapon (15 gold)';
-            btn2.onclick = sellWeapon;
-
             text.innerText = 'You do not have enough gold to buy new weapon.';
         }
     } else {
         text.innerText = 'You already have the best weapons in your inventory.\n\nIn your inventory you have: ' + inventory + '.';
+        btn2.innerText = 'Sell weapon (15 gold)';
+        btn2.onclick = sellWeapon;
     }
 }
 
@@ -216,13 +216,13 @@ function attack() {
     }
 
     if(Math.random() <= .1 && inventory.length !== 1) {
-        text.innerText = 'Your ' + inventory.pop() + 'breaks.';
+        text.innerText = 'Your ' + inventory.pop() + 'breaks.\n';
         currentWeapon--;
     }
 }
 
 function getMonsterAttackValue(level) {
-    const hit = (level * 5) - (Math.random() * xp);
+    const hit = (level * 5) - (Math.floor(Math.random() * xp));
     return hit > 0? hit:0;
 }
 
@@ -268,22 +268,39 @@ function pickEight() {
 function pick(guess) {
     const numbers = [];
 
-    while(number.length < 10) {
+    while(numbers.length < 10) {
         numbers.push(Math.floor(Math.random() * 11));
     }
 
-    text.innerText = 'You picked ' + guess + '. Here are the random numbers list:\n';
+    text.innerText = 'You picked ' + guess + '. Here are the random numbers list:\n\n';
 
-    for(let i = 0; i <= 10; i++) {
-        text.innerText += numbers[i] + ' ';
+    for(let i = 0; i < 10; i++) {
+        text.innerText += numbers[i] + '\n';
+    }
+
+    if (numbers.includes(guess)) {
+        text.innerText += "\nRight! You win 20 gold!";
+        gold += 20;
+        goldText.innerText = gold;
+    } else {
+        text.innerText += "\nWrong! You lose 10 health!";
+        health -= 10;
+        healthText.innerText = health;
+        
+        if (health <= 0) {
+            lose();
+        }
     }
 }
 
 function restart() {
-    xpText.innerText = 0;
-    healthText.innerText = 100;
-    goldText.innerText = 50;
+    xp = 0;
+    health = 100;
+    gold = 50;
     currentWeapon = 0;
     inventory = ["stick"];
+    goldText.innerText = gold;
+    healthText.innerText = health;
+    xpText.innerText = xp;
     goTown();
-}
+}   
